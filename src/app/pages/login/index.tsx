@@ -1,53 +1,55 @@
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { Button, Flex, Input } from 'antd';
-import { useState } from 'react';
+import { Button, Form, Input } from 'antd';
+import type { FormProps } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import type { ILoginRequest } from '../../models/user';
 import { useLoginMutation } from '../../services/auth';
 
-const LoginPage = () => {
-  const [formState, setFormState] = useState<ILoginRequest>({
-    username: '',
-    password: '',
-  });
+type FieldType = {
+  username: string;
+  password: string;
+};
 
+const LoginPage = () => {
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
 
-  const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) =>
-    setFormState((prev) => ({ ...prev, [name]: value }));
-
-  const handleSubmit = async () => {
+  const onFinish: FormProps<FieldType>['onFinish'] = async (values) => {
     try {
-      await login(formState).unwrap();
-      // Being that the result is handled in extraReducers in authSlice,
-      // we know that we're authenticated after this, so the user
-      // and token will be present in the store
+      await login(values).unwrap();
       navigate('/');
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
+  const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
+    console.error('Failed:', errorInfo);
+  };
+
   return (
-    <Flex justify="center" className="min-h-dvh">
-      <form className="my-auto flex flex-col gap-2">
-        <Flex>Hint: enter anything, or leave it blank and hit login</Flex>
+    <div className="min-h-dvh flex justify-center items-center">
+      <div className="min-w-96">
+        <h1 className="mb-6 text-center text-xl">Login</h1>
+        <Form name="login" onFinish={onFinish} onFinishFailed={onFinishFailed} autoComplete="off">
+          <Form.Item<FieldType>
+            name="username"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <Input placeholder="Username" />
+          </Form.Item>
 
-        <Input onChange={handleChange} name="username" type="text" placeholder="Username" />
+          <Form.Item<FieldType>
+            name="password"
+            rules={[{ required: true, message: 'Please input your password!' }]}
+          >
+            <Input.Password placeholder="Password" />
+          </Form.Item>
 
-        <Input.Password
-          name="password"
-          placeholder="Password"
-          onChange={handleChange}
-          iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-        />
-
-        <Button onClick={handleSubmit} loading={isLoading}>
-          Login
-        </Button>
-      </form>
-    </Flex>
+          <Button type="primary" htmlType="submit" loading={isLoading} className="w-full">
+            Submit
+          </Button>
+        </Form>
+      </div>
+    </div>
   );
 };
 

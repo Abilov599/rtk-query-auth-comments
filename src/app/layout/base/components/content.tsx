@@ -1,7 +1,7 @@
 import { Layout, theme } from 'antd';
-// import { Header } from './header';
+import { Header } from './header';
 import { Outlet } from 'react-router-dom';
-// import { Footer } from './footer';
+import { Footer } from './footer';
 
 function Content() {
   const {
@@ -9,7 +9,7 @@ function Content() {
   } = theme.useToken();
   return (
     <Layout.Content className="min-h-svh">
-      {/* <Header /> */}
+      <Header />
       <div
         style={{
           background: colorBgContainer,
@@ -19,7 +19,7 @@ function Content() {
       >
         <Outlet />
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </Layout.Content>
   );
 }

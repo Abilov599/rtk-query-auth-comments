@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 function Footer() {
   return (
     <Layout.Footer className="text-center mt-auto">
-      Ant Design ©{new Date().getFullYear()} Created by Ant UED
+      App ©{new Date().getFullYear()} Created by Jeyhun Abilov
     </Layout.Footer>
   );
 }

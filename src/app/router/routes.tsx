@@ -6,6 +6,7 @@ import { CommentsPage } from '../pages/comments';
 import { CommentPage } from '../pages/comment';
 import { LoginPage } from '../pages/login';
 import { NotFound } from '../pages/not-found';
+import { ProfilePage } from '../pages/profile';
 
 const routes: RouteObject[] = [
   {
@@ -15,6 +16,10 @@ const routes: RouteObject[] = [
       {
         element: <HomePage />,
         index: true,
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />,
       },
       {
         path: 'comments',

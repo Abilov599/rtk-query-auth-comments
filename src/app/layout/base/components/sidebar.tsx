@@ -34,10 +34,10 @@ function Sidebar() {
     >
       <div className="flex flex-col justify-between h-full py-2">
         <div>
-          <div className="p-2 flex gap-3 items-center mx-1 bg-white rounded-lg">
+          <Link className="p-2 flex gap-3 items-center mx-1 bg-white rounded-lg" to="/profile">
             <Avatar icon={<UserOutlined />} src={user?.image} className="ml-2" />
             <Typography.Text>{user?.username}</Typography.Text>
-          </div>
+          </Link>
           <Menu theme="dark" mode="inline" items={items} />
         </div>
         <div className="flex justify-center">
