@@ -4,7 +4,7 @@ import type { IComment, ICommentList } from '../models/comment';
 // Define a service using a base URL and expected endpoints
 export const commentApi = createApi({
   reducerPath: 'commentsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://dummyjson.com/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_BASE_URL }),
   endpoints: (builder) => ({
     useGetComments: builder.query<ICommentList, void>({
       query: () => 'comments',
