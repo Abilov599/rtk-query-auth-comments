@@ -14,14 +14,20 @@ const initialState: IAuthState = { user: null, accessToken: null, refreshToken: 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    resetStore: (state) => {
+      state.refreshToken = null;
+      state.accessToken = null;
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addMatcher(
       authApi.endpoints.login.matchFulfilled,
-      (state, { payload: { accessToken, refreshToken, ...user } }) => {
+      (state, { payload: { accessToken, refreshToken } }) => {
         state.accessToken = accessToken;
         state.refreshToken = refreshToken;
-        state.user = user;
+
         localStorage.setItem('accessToken', accessToken);
       },
     );
@@ -31,6 +37,8 @@ const authSlice = createSlice({
     });
   },
 });
+
+export const { resetStore } = authSlice.actions;
 
 export default authSlice.reducer;
 

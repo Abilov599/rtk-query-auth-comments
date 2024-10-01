@@ -1,11 +1,19 @@
-import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
-import { selectCurrentUser } from '../redux/auth-slice/auth-slice';
+import { useNavigate } from 'react-router-dom';
+import { resetStore, selectCurrentUser } from '../redux/auth-slice/auth-slice';
+import { useAppDispatch, useTypedSelector } from './store';
 
 export const useAuth = () => {
-  const { user, accessToken } = useSelector(selectCurrentUser);
+  const { accessToken, user } = useTypedSelector(selectCurrentUser);
+  const isAuthenticated = Boolean(accessToken);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  const isAuthenticated = Boolean(accessToken && user);
+  function logout() {
+    dispatch(resetStore());
+    localStorage.removeItem('accessToken');
+    navigate('/login');
+    window.location.reload();
+  }
 
-  return useMemo(() => isAuthenticated, [isAuthenticated]);
+  return { isAuthenticated, user, logout };
 };

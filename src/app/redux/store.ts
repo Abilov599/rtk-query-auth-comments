@@ -1,12 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-// Or from '@reduxjs/toolkit/query/react'
-import { setupListeners } from '@reduxjs/toolkit/query';
+import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { commentApi } from '../services/comment';
 import authSlice from './auth-slice/auth-slice';
 import { authApi } from '../services/auth';
 
 const preloadedState = {
-  auth: JSON.parse(localStorage.getItem('accessToken')!) || { user: null, accessToken: null },
+  auth: {
+    user: null,
+    accessToken: localStorage.getItem('accessToken'),
+    refreshToken: null,
+  },
 };
 
 export const store = configureStore({

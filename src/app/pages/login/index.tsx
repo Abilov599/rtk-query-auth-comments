@@ -1,10 +1,9 @@
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { Button, Flex, Input } from 'antd';
 import { useState } from 'react';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { ILoginRequest } from '../../models/user';
 import { useLoginMutation } from '../../services/auth';
-import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage = () => {
   const [formState, setFormState] = useState<ILoginRequest>({
@@ -13,8 +12,6 @@ const LoginPage = () => {
   });
 
   const [login, { isLoading }] = useLoginMutation();
-  const isAuthenticated = useAuth();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const handleChange = ({ target: { name, value } }: React.ChangeEvent<HTMLInputElement>) =>
@@ -31,10 +28,6 @@ const LoginPage = () => {
       console.error(err);
     }
   };
-
-  if (isAuthenticated) {
-    return <Navigate to="/" state={{ from: location }} />;
-  }
 
   return (
     <Flex justify="center" className="min-h-dvh">

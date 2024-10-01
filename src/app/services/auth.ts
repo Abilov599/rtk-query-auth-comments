@@ -3,6 +3,7 @@ import { RootState } from '../redux/store';
 import { ILoginRequest, ILoginResponse, IUser } from '../models/user';
 
 export const authApi = createApi({
+  reducerPath: 'authApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://dummyjson.com/auth',
     prepareHeaders: (headers, { getState }) => {
@@ -22,10 +23,10 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
-    getMe: builder.mutation<IUser, void>({
+    getMe: builder.query<IUser, void>({
       query: () => 'me',
     }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useGetMeQuery } = authApi;
