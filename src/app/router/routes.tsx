@@ -1,0 +1,40 @@
+import { type RouteObject } from 'react-router-dom';
+import { BaseLayout } from '../layout/base/layout';
+import { HomePage } from '../pages/home';
+import { ErrorBoundary } from './utils/error-boundary';
+import { CommentsPage } from '../pages/comments';
+import { CommentPage } from '../pages/comment';
+import { LoginPage } from '../pages/login';
+import { NotFound } from '../pages/not-found';
+
+const routes: RouteObject[] = [
+  {
+    path: '/',
+    element: <BaseLayout />,
+    children: [
+      {
+        element: <HomePage />,
+        index: true,
+      },
+      {
+        path: 'comments',
+        element: <CommentsPage />,
+      },
+      {
+        path: 'comments/:id',
+        element: <CommentPage />,
+      },
+    ],
+    errorElement: <ErrorBoundary />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
+  },
+];
+
+export { routes };
