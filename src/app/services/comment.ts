@@ -14,8 +14,11 @@ export const commentApi = createApi({
       query: (id) => `comments/${id}`,
     }),
 
-    usePostComment: builder.mutation<IComment, Omit<IComment, 'id'>>({
-      query: ({ body }) => ({
+    usePostComment: builder.mutation<
+      IComment,
+      Pick<IComment, 'body' | 'postId'> & { userId: number }
+    >({
+      query: (body) => ({
         url: 'comments/add',
         method: 'POST',
         body,

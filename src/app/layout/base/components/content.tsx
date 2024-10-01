@@ -8,7 +8,7 @@ function Content() {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   return (
-    <Layout.Content className="min-h-svh">
+    <Layout.Content className="min-h-svh relative">
       <Header />
       <div
         style={{

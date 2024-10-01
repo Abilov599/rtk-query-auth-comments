@@ -13,7 +13,10 @@ function Header() {
   ];
 
   return (
-    <Layout.Header style={{ background: token.colorBgContainer }} className="flex items-center">
+    <Layout.Header
+      style={{ background: token.colorBgContainer }}
+      className="flex items-center sticky top-0 z-10"
+    >
       <Breadcrumb items={items} />
     </Layout.Header>
   );
