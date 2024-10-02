@@ -7,7 +7,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useGetMeQuery } from '@/services/auth';
 
 function BaseLayout() {
-  const isAuthenticated = useAuth();
+  const { isAuthenticated } = useAuth();
   const { isLoading, isError, isSuccess } = useGetMeQuery();
   const location = useLocation();
 

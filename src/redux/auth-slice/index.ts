@@ -15,11 +15,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    resetStore: (state) => {
-      state.refreshToken = null;
-      state.accessToken = null;
-      state.user = null;
+    setAuthToken: (state, { payload }) => {
+      state.accessToken = payload;
     },
+    resetStore: () => initialState,
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -38,7 +37,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetStore } = authSlice.actions;
+export const { setAuthToken, resetStore } = authSlice.actions;
 
 export default authSlice.reducer;
 
