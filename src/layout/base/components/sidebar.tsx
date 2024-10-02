@@ -36,13 +36,13 @@ function Sidebar() {
         <div>
           <Link className="p-2 flex gap-3 items-center mx-1 bg-white rounded-lg" to="/profile">
             <Avatar icon={<UserOutlined />} src={user?.image} className="ml-2" />
-            <Typography.Text>{user?.username}</Typography.Text>
+            <Typography.Text className="text-black">{user?.username}</Typography.Text>
           </Link>
           <Menu theme="dark" mode="inline" items={items} />
         </div>
         <div className="flex justify-center">
           <button className="bg-white py-1 px-2 rounded" onClick={logout}>
-            <LogoutOutlined />
+            <LogoutOutlined className="text-black" />
           </button>
         </div>
       </div>
