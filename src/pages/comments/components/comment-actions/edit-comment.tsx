@@ -44,13 +44,17 @@ function EditComment({ id }: IEditCommentProps) {
         <EditOutlined />
       </Button>
       <Modal
-        title="Title"
+        title="Edit comment"
         open={open}
         onOk={handleOk}
         confirmLoading={isLoading}
         onCancel={handleCancel}
       >
-        <Input type="text" onChange={(e) => setCommentText(e.target.value)} />
+        <Input
+          type="text"
+          onChange={(e) => setCommentText(e.target.value)}
+          placeholder="Please enter new comment message..."
+        />
       </Modal>
     </>
   );
