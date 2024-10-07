@@ -10,7 +10,7 @@ function App() {
 
   return (
     <ConfigProvider theme={{ algorithm: isDarkMode ? darkAlgorithm : defaultAlgorithm }}>
-      <AntdApp>
+      <AntdApp className={`${isDarkMode ? 'bg-black' : null}`}>
         <RouterProvider router={router} />
         <FloatButton icon={isDarkMode ? <MoonOutlined /> : <SunOutlined />} onClick={toggle} />
       </AntdApp>
