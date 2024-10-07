@@ -7,7 +7,7 @@ export const useAuth = () => {
 
   function logout() {
     localStorage.removeItem('accessToken');
-    window.location.reload();
+    window.location.href = '/login';
   }
 
   return { isAuthenticated, user, logout };
