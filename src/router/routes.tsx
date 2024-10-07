@@ -7,11 +7,17 @@ import { CommentPage } from '@/pages/comment';
 import { LoginPage } from '@/pages/login';
 import { NotFound } from '@/pages/not-found';
 import { ProfilePage } from '@/pages/profile';
+import PrivateRoute from './utils/private-route';
+import AuthRoute from './utils/auth-route';
 
 const routes: RouteObject[] = [
   {
     path: '/',
-    element: <BaseLayout />,
+    element: (
+      <PrivateRoute>
+        <BaseLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         element: <HomePage />,
@@ -34,7 +40,11 @@ const routes: RouteObject[] = [
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: (
+      <AuthRoute>
+        <LoginPage />
+      </AuthRoute>
+    ),
   },
   {
     path: '*',
