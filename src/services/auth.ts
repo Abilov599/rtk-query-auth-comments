@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@/redux/store';
 import { ILoginRequest, ILoginResponse, IUser } from '@/models/user';
-import { setAuthToken } from '@/redux/auth-slice';
+import { resetStore, setAuthToken } from '@/redux/auth-slice';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -27,6 +27,7 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           dispatch(setAuthToken(data.accessToken));
+          localStorage.setItem('accessToken', data.accessToken);
         } catch (error) {
           console.error(error);
         }
@@ -34,6 +35,18 @@ export const authApi = createApi({
     }),
     getMe: builder.query<IUser, void>({
       query: () => 'me',
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+        } catch (error) {
+          const apiError = error as { status: number }; // Cast error to your custom error type
+          if (apiError?.status === 401) {
+            dispatch(resetStore()); // Clear token in Redux
+            localStorage.removeItem('accessToken'); // Remove token from local storage
+            window.location.href = '/login'; // Redirect to login page (you may need to pass the navigate function)
+          }
+        }
+      },
     }),
   }),
 });
