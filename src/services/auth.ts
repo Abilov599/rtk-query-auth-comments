@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@/redux/store';
 import { ILoginRequest, ILoginResponse, IUser } from '@/models/user';
 import { resetStore, setAuthToken } from '@/redux/auth-slice';
+import { isApiError } from '@/utils/is-api-error';
 
 export const authApi = createApi({
   reducerPath: 'authApi',
@@ -39,11 +40,14 @@ export const authApi = createApi({
         try {
           await queryFulfilled;
         } catch (error) {
-          const apiError = error as { status: number }; // Cast error to your custom error type
-          if (apiError?.status === 401) {
-            dispatch(resetStore()); // Clear token in Redux
-            localStorage.removeItem('accessToken'); // Remove token from local storage
-            window.location.href = '/login'; // Redirect to login page (you may need to pass the navigate function)
+          // Use the type guard to check the error type
+          if (isApiError(error)) {
+            const { status } = error.error;
+            if (status === 401) {
+              dispatch(resetStore()); // Clear token in Redux
+              localStorage.removeItem('accessToken'); // Remove token from local storage
+              window.location.href = '/login'; // Redirect to login page (you may need to pass the navigate function)
+            }
           }
         }
       },
